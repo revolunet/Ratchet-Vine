@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html ng-app="app">
+    <head>
+        <meta charset="utf-8">
+        <title>Ratchet-Vine-Angular</title>
+
+        <!-- Sets initial viewport load and disables zooming    -->
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+        <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+        <!-- Set Apple icons for when prototype is saved to home screen -->
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="touch-icons/apple-touch-icon-114x114.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="touch-icons/apple-touch-icon-72x72.png">
+        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="touch-icons/apple-touch-icon-57x57.png">
+
+        <!-- Include the compiled Ratchet CSS -->
+        <link rel="stylesheet" href="static/css/ratchet.css">
+        <link rel="stylesheet" href="static/css/snap.css">
+        <link rel="stylesheet" href="static/css/vine.css">
+
+    </head>
+    <body ng-controller="RootCtrl">
+    
+        <div class="snap-drawers" ng-include="'partials/drawers.html'">
+            
+        </div>
+
+        <div id="content">
+            <ng-view></ng-view>
+        </div>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.1/angular.js"></script>
+        <script type="text/javascript" src="static/js/ratchet.custom.js"></script>
+        <script type="text/javascript" src="static/js/jquery.min.js"></script>
+        <script type="text/javascript" src="static/js/snap.js"></script>
+        <script type="text/javascript" src="static/js/app.js"></script>
+        <script type="text/javascript">
+        var app = angular.module('app', []);
+            app.config(function($routeProvider) {
+                // configure routes
+                $routeProvider
+                    .when('/', {templateUrl: 'partials/explore.html'})
+                    .when('/profile', {templateUrl: 'partials/profile.html', controller: 'ProfileCtrl'})
+                    .when('/settings', {templateUrl: 'partials/settings.html'})
+                    .when('/feed', {templateUrl: 'partials/feed.html', controller: 'ProfileCtrl'})
+                    .when('/friends/:id', {templateUrl: 'partials/friend.html', controller: 'FriendCtrl'})
+                    .otherwise({redirectTo: '/'});
+            });
+            app.controller('MainCtrl', function($scope) {
+
+            });
+            app.controller('FriendCtrl', function($scope, $route) {
+                console.log($route);
+                $scope.friend = {
+                    id: $route.current.params.id
+                }
+            });
+            app.controller('ProfileCtrl', function($scope) {
+                // gen random stuff
+                $scope.items = [];
+                for (var i=0, j=10; i<j; i++) {
+                    $scope.items.push({
+                        likes: $scope.random(200, 10000),
+                        comments: $scope.random(20, 100)
+                    })
+                }
+                $scope.followers = $scope.random(200, 5000);
+                $scope.following = $scope.random(200, 5000);
+            });
+
+            
+
+            app.controller('RootCtrl', function($scope) {
+                // make this functions available everywhere
+                $scope.random = function(min, max) {
+                    return Math.floor(Math.random() * (max - min + 1)) + min;
+                }
+                $scope.range = function(total) {
+                    var input = [];
+                    total = parseInt(total, 10);
+                    for (var i = 0, j = total; i < j; i++) {
+                        input.push(i);
+                    }
+                    return input;
+                }
+            })
+            app.controller('RightDrawerCtrl', function($scope) {
+                $scope.friends = [
+                    {id:1, name: 'Juju'},
+                    {id:2, name: 'Bill'},
+                    {id:3, name: 'Jackie'},
+                    {id:4, name: 'John'},
+                    {id:5, name: 'Cecile'},
+                    {id:6, name: 'Marcel'},
+                    {id:7, name: 'Raphael'},
+                    {id:8, name: 'Denis'},
+                    {id:9, name: 'Andy'},
+                    {id:10, name: 'Jim'},
+                    {id:11, name: 'Jean'},
+                    {id:12, name: 'Mac'},
+                    {id:13, name: 'Paul'},
+                    {id:14, name: 'Jenny'},
+                    {id:15, name: 'Phibbie'},
+                    {id:16, name: 'Mat'},
+                ];
+            });
+            app.filter('range', function() {
+                return function(input, total) {
+                    total = parseInt(total, 10);
+                    for (var i = 0, j = total; i < j; i++) {
+                        input.push(i);
+                    }
+                    return input;
+                };
+            });
+            app.filter('random', function() {
+                return function(input, min, max) {
+                    return Math.floor(Math.random() * (max - min + 1)) + min;
+                };
+            });
+
+
+        </script>
+    </body>
+</html>

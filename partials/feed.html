@@ -1,7 +1,4 @@
-<?PHP require 'includes/header.php'; ?>
-	
-	<div id="content">
-	
+
 		<!-- Make sure all your bars are the first things in your <body> -->
 		<header class="bar-title">
 			<button class="button" id="toggle-left">Menu</button>
@@ -13,8 +10,8 @@
 		<div class="content">
 			
 			<div class="feed">
-				<?PHP for($i=0; $i<10; $i++){ ?>
-				<div class="entry">
+				
+				<div class="entry" ng-repeat="item in items">
 					
 					<div class="media"><a href="#"><img src="static/img/placeholders/600.gif"></a></div>
 					<div class="the-post">
@@ -24,20 +21,20 @@
 						<div class="entry-content">
 							<div class="author">
 								<a href="#">jakiestfu</a>
-								<span><?PHP echo ($i+1); ?>h</span>
+								<span>{{ $index + 1 }}h</span>
 							</div>
 							<div class="excerpt">Venice</div>
 							
 							<hr />
 							
 							<div>
-								<a href="#"><?PHP echo rand(500,10000); ?> people</a> like this
+								<a href="#">{{ item.likes }} people</a> like this
 							</div>
 							
 							<hr />
 							
 							<div>
-								<a href="#" class="light">See <?PHP echo rand(50,200); ?> older comments</a>
+								<a href="#" class="light">See {{ item.comments }} older comments</a>
 							</div>
 							
 							<div class="comments">
@@ -58,5 +55,4 @@
 			</div>
 			
 		</div>
-	</div>
-<?PHP require 'includes/footer.php'; ?>
+

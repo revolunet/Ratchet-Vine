@@ -47,14 +47,19 @@
 
     if (!anchor || !anchor.hash) return;
 
-    popover = document.querySelector(anchor.hash);
+    try {
+     popover = document.querySelector(anchor.hash);
+    }
+    catch(e) {
 
+    }
     if (!popover || !popover.classList.contains('popover')) return;
 
     return popover;
   }
 
   window.addEventListener('touchend', function (e) {
+
     var popover = getPopover(e);
 
     if (!popover) return;
