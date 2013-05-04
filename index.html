@@ -35,7 +35,7 @@
         <script type="text/javascript" src="static/js/ratchet.custom.js"></script>
         <script type="text/javascript" src="static/js/jquery.min.js"></script>
         <script type="text/javascript" src="static/js/snap.js"></script>
-        <script type="text/javascript" src="static/js/app.js"></script>
+        
         <script type="text/javascript">
         var app = angular.module('app', []);
             app.config(function($routeProvider) {
@@ -52,7 +52,6 @@
 
             });
             app.controller('FriendCtrl', function($scope, $route) {
-                console.log($route);
                 $scope.friend = {
                     id: $route.current.params.id
                 }
@@ -85,6 +84,22 @@
                     }
                     return input;
                 }
+
+                $scope.snapper = new Snap({
+                    element: document.getElementById('content')
+                });
+                
+                $(document).on('click', '#toggle-left', function(){
+                    $scope.snapper.open('left');
+                });
+                
+                $(document).on('click', '#toggle-right', function(){
+                    $scope.snapper.open('right');
+                });
+                
+                $(document).on('click', 'a[href="#"]', function(e){ e.preventDefault(); });
+
+               // $scope.snap = snapper;
             })
             app.controller('RightDrawerCtrl', function($scope) {
                 $scope.friends = [

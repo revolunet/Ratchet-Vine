@@ -1,5 +1,6 @@
+var snapper;
 $(document).ready(function(){
-	var snapper = new Snap({
+	snapper = new Snap({
 		element: document.getElementById('content')
 	});
 	
